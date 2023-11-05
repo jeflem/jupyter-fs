@@ -15,7 +15,7 @@ from tornado import web
 from fs.errors import FSError
 from fs.opener.errors import OpenerError, ParseError
 from jupyter_server.base.handlers import APIHandler
-from jupyter_server.services.contents.manager import AsyncContentsManager
+from jupyter_server.services.contents.manager import ContentsManager
 
 from .auth import substituteAsk, substituteEnv, substituteNone
 from .config import JupyterFs as JupyterFsConfig
@@ -33,7 +33,7 @@ from .pathutils import (
 __all__ = ["MetaManager", "MetaManagerHandler"]
 
 
-class MetaManager(AsyncContentsManager):
+class MetaManager(ContentsManager):
     copy_pat = re.compile(r"\-Copy\d*\.")
 
     @default("files_handler_params")
@@ -150,7 +150,7 @@ class MetaManager(AsyncContentsManager):
     def root_dir(self):
         return self.root_manager.root_dir
 
-    async def copy(self, from_path, to_path=None):
+    def copy(self, from_path, to_path=None):
         """Copy an existing file and return its new model.
 
         If to_path not specified, it will be the parent directory of from_path.
@@ -213,7 +213,7 @@ class MetaManager(AsyncContentsManager):
     get = path_first_arg("get", True)
     delete = path_first_arg("delete", False)
 
-    get_kernel_path = path_first_arg("get_kernel_path", False, sync=True)
+    get_kernel_path = path_first_arg("get_kernel_path", False)
 
     create_checkpoint = path_first_arg("create_checkpoint", False)
     list_checkpoints = path_first_arg("list_checkpoints", False)
