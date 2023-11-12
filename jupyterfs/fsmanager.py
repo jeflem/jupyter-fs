@@ -277,7 +277,10 @@ class FSManager(FileContentsManager):
         except NoSysPath:
             try:
                 # Fall back on "u_w" check, even if we don't know if our user == owner...
-                model["writable"] = info.permissions.check("u_w")
+                if info.permissions:
+                    model["writable"] = info.permissions.check("u_w")
+                else:
+                    model["writable"] = self._default_writable
             except (errors.MissingInfoNamespace,):
                 # use default if access namespace is missing
                 model["writable"] = self._default_writable
