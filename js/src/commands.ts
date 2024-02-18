@@ -35,6 +35,7 @@ import { getContentParent, getRefreshTargets, openDirRecursive, revealAndSelectP
 import { ISettingRegistry } from "@jupyterlab/settingregistry";
 import { showErrorMessage } from "@jupyterlab/apputils";
 import { getAllSnippets, instantiateSnippet, Snippet } from "./snippets";
+import { Md5 } from "./md5";
 
 // define the command ids as a constant tuple
 export const commandNames = [
@@ -103,12 +104,13 @@ function _getRelativePaths(selectedFiles: Array<Content<ContentsProxy.IJupyterCo
 
 
 async function _digestString(value: string): Promise<string> {
-  const encoded = new TextEncoder().encode(value); // encode as (utf-8) Uint8Array
-  const buffer = await crypto.subtle.digest("SHA-256", encoded); // hash the message
-  const hash = Array.from(new Uint8Array(buffer)); // convert buffer to byte array
-  return hash
-    .map(b => b.toString(16).padStart(2, "0"))
-    .join(""); // convert bytes to hex string
+  const hash = Md5.hashStr(value)
+  //const encoded = new TextEncoder().encode(value); // encode as (utf-8) Uint8Array
+  //const buffer = await crypto.subtle.digest("SHA-256", encoded); // hash the message
+  //const hash = Array.from(new Uint8Array(buffer)); // convert buffer to byte array
+  return hash;
+  //  .map(b => b.toString(16).padStart(2, "0"))
+  //  .join(""); // convert bytes to hex string
 }
 
 
