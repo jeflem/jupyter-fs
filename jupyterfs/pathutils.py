@@ -54,6 +54,8 @@ def _resolve_path(path, manager_dict):
         # Try to find a sub-manager for the first subdirectory.
         mgr = manager_dict.get(parts[0])
         if mgr is not None:
+            if '/' not in parts[1]:
+                parts[1] = './' + parts[1]
             return parts[0], mgr, parts[1]
 
         raise HTTPError(
