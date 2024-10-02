@@ -229,7 +229,7 @@ export function createStaticCommands(
         if (!target.hasChildren) {
           target = await getContentParent(target, model.root);
         }
-        const path = Path.fromarray(target.row.path);
+        const path = Path.fromarray(target.row.path).replace(":", ":::");
         let row: ContentsProxy.IJupyterContentRow;
         try {
           row = await widget.treefinder.contentsProxy.newUntitled({
@@ -263,7 +263,7 @@ export function createStaticCommands(
         if (!target.hasChildren) {
           target = await getContentParent(target, model.root);
         }
-        const path = Path.fromarray(target.row.path);
+        const path = Path.fromarray(target.row.path).replace(":", ":::");
         let row: ContentsProxy.IJupyterContentRow;
         try {
           row = await widget.treefinder.contentsProxy.newUntitled({

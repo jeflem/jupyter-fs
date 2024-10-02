@@ -33,7 +33,7 @@ export class JupyterClipboard {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     this._model.pasteSub.subscribe(async ({ destination, doCut, memo }) => {
       const destPath = destination.kind === "dir" ? destination.path : destination.path.slice(0, -1);
-      const destPathstr = Path.fromarray(destPath);
+      const destPathstr = Path.fromarray(destPath).replace(":", ":::");
       await Promise.all(memo.map(s => this._onPaste(s, destPathstr, doCut)));
       const contentsModel = this._tracker.currentWidget!.treefinder.model!;
       let toRefresh = getRefreshTargets<ContentsProxy.IJupyterContentRow>(
@@ -73,7 +73,7 @@ export class JupyterClipboard {
   }
 
   protected async _onDelete<T extends IContentRow>(src: T) {
-    const srcPathstr = Path.fromarray(src.path);
+    const srcPathstr = Path.fromarray(src.path).replace(":", ":::");
     try {
       await this._drive.delete(srcPathstr);
     } catch (err) {
@@ -82,7 +82,7 @@ export class JupyterClipboard {
   }
 
   protected async _onPaste<T extends IContentRow>(src: T, destPathstr: string, doCut: boolean) {
-    const srcPathstr = Path.fromarray(src.path);
+    const srcPathstr = Path.fromarray(src.path).replace(":", ":::");
     try {
       await this._drive.copy(srcPathstr, destPathstr);
       if (doCut) {

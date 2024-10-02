@@ -280,7 +280,7 @@ export class TreeFinderWidget extends DragDropWidget {
     }
     this.model!.openSub.subscribe(rows => rows.forEach(row => {
       if (!row.getChildren) {
-        void this._commands.execute("docmanager:open", { path: Path.fromarray(row.path) });
+        void this._commands.execute("docmanager:open", { path: Path.fromarray(row.path).replace(":", ":::") });
       } else {
         const widget = TreeFinderSidebar.tracker.findByDrive(this.parent!.id)!;
         void TreeFinderSidebar.tracker.save(widget);
@@ -319,7 +319,7 @@ export class TreeFinderWidget extends DragDropWidget {
   }
 
   get selectionPathstrs() {
-    return this.model?.selection.map(c => Path.fromarray(c.row.path));
+    return this.model?.selection.map(c => Path.fromarray(c.row.path).replace(":", ":::"));
   }
 
   /**
