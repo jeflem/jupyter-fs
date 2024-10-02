@@ -39,7 +39,7 @@ def _resolve_path(path, manager_dict):
     Returns:
         tuple: prefix of contents manager, instance of contents manager, relative path to request from contents manager
     """
-    parts = path.strip("/").split(":", 1)
+    parts = path.strip("/").split(":::", 1)
     if len(parts) == 1:
         # Try to find use the root manager, if one was supplied.
         mgr = manager_dict.get("")
@@ -178,18 +178,18 @@ def path_old_new(method_name, returns_model, sync=False):
     return _wrapper2
 
 
-# handlers for drive specifications in path strings, as in "fooDrive:bar/baz.buzz"
+# handlers for drive specifications in path strings, as in "fooDrive:::bar/baz.buzz"
 def getDrive(path):
     first = path.strip("/").split("/", 1)[0]
-    return first.split(":", 1)[0]
+    return first.split(":::", 1)[0]
 
 
 def isDrive(path):
-    return "/" not in path and path.endswith(":")
+    return "/" not in path and path.endswith(":::")
 
 
 def stripDrive(path):
-    """Strips off leading "drive:foo" specification from path, if present"""
+    """Strips off leading "drive:::foo" specification from path, if present"""
     # strip any drives off the front of the filename
     first, *rest = path.strip("/").split("/")
-    return "/".join([first.split(":", 1).pop(), *rest])
+    return "/".join([first.split(":::", 1).pop(), *rest])

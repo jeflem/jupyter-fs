@@ -108,7 +108,7 @@ export class TreeFinderWidget extends DragDropWidget {
     this._commands = commands;
     this._expanding =  new Map<string, number>();
     this._columns = columns;
-    this.rootPath = rootPath === "" ? rootPath : rootPath + ":";
+    this.rootPath = rootPath === "" ? rootPath : rootPath + ":::";
     this._initialLoad = true;
 
     this._readyDelegate = new PromiseDelegate<void>();

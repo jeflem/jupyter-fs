@@ -80,22 +80,22 @@ class _TestBase:
         drive = resources[0]["drive"]
 
         fpaths = [
-            f"{drive}:{test_fname}",
-            f"{drive}:root0/{test_fname}",
-            f"{drive}:root1/leaf1/{test_fname}",
+            f"{drive}:::{test_fname}",
+            f"{drive}:::root0/{test_fname}",
+            f"{drive}:::root1/leaf1/{test_fname}",
         ]
 
         hidden_paths = [
-            f"{drive}:root1/leaf1/.hidden.txt",
-            f"{drive}:root1/.leaf1/also_hidden.txt",
+            f"{drive}:::root1/leaf1/.hidden.txt",
+            f"{drive}:::root1/.leaf1/also_hidden.txt",
         ]
 
         # set up dir structure
-        await cc.mkdir(f"{drive}:root0")
-        await cc.mkdir(f"{drive}:root1")
-        await cc.mkdir(f"{drive}:root1/leaf1")
+        await cc.mkdir(f"{drive}:::root0")
+        await cc.mkdir(f"{drive}:::root1")
+        await cc.mkdir(f"{drive}:::root1/leaf1")
         if allow_hidden:
-            await cc.mkdir(f"{drive}:root1/.leaf1")
+            await cc.mkdir(f"{drive}:::root1/.leaf1")
 
         for p in fpaths:
             # save to root and tips
