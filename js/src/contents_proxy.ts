@@ -54,21 +54,21 @@ export namespace ContentsProxy {
 
   export function toFullPath(path: string, drive?: string): string {
 
-    if (!drive || path.startsWith(`${drive}:::`)) {
-      if (path.startsWith(`${drive}:::/`)) {
-        return path.replace(`${drive}:::/`, `${drive}:::`);
+    if (!drive || path.startsWith(`${drive}:`)) {
+      if (path.startsWith(`${drive}:/`)) {
+        return path.replace(`${drive}:/`, `${drive}:`);
       }
       return path;
     } else if (path.startsWith(`${drive}/`)) {
-      return [drive, path.slice(drive.length + 1)].join(":::");
+      return [drive, path.slice(drive.length + 1)].join(":");
     } else {
-      return [drive, path].join(":::");
+      return [drive, path].join(":");
     }
   }
 
   export function toLocalPath(path: string): string {
     const [first, ...rest] = path.split("/");
-    return [first.split(":::").pop(), ...rest].join("/");
+    return [first.split(":").pop(), ...rest].join("/");
   }
 
   export function toJupyterContentRow(row: Contents.IModel, contentsManager: Contents.IManager, drive?: string, onGetChildren?: ContentsProxy.GetChildrenCallback): IJupyterContentRow {

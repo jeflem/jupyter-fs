@@ -128,7 +128,7 @@ export function instantiateSnippet(template: string, url: string, pathstr: strin
     url,
     path: relativePath,
     full_url: `${url.replace(/\/$/, "")}/${relativePath}`,
-    full_path: `${drive}:::/${relativePath}`,
+    full_path: `${drive}:/${relativePath}`,
     drive,
   };
 
